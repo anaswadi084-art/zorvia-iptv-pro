@@ -84,6 +84,20 @@
   .bar i{display:block;height:100%;width:62%;background:var(--gold);border-radius:3px;box-shadow:0 0 10px rgba(245,225,108,.6)}
   .remote{display:flex;justify-content:space-around;padding:10px;border-top:1px solid var(--line);font-size:10px;color:var(--t2)}
   .remote span b{font-family:var(--mono);color:var(--gold);background:var(--s3);padding:2px 6px;border-radius:4px;margin-right:6px}
+  /* real app screens */
+  .shots{position:relative;padding:8% 6% 12% 4%}
+  .shot{margin:0;border-radius:14px;overflow:hidden;background:#0b0e14;border:1px solid rgba(245,225,108,.22);box-shadow:0 30px 70px rgba(0,0,0,.6),0 0 40px rgba(245,225,108,.06)}
+  .shot img{display:block;width:100%;height:auto}
+  .s-main{position:relative;z-index:2}
+  .s-back{position:absolute;z-index:1;width:62%;right:0;top:0;transform:rotate(3deg);opacity:.85}
+  .s-front{position:absolute;z-index:3;width:52%;left:0;bottom:0;transform:rotate(-3deg)}
+  .gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+  .gallery figure{margin:0}
+  .gallery .shot{transition:transform .25s,border-color .25s}
+  .gallery figure:hover .shot{transform:translateY(-4px);border-color:rgba(245,225,108,.45)}
+  .gallery figcaption{margin-top:12px;font-weight:600}
+  .gallery figcaption span{display:block;font-weight:400;font-size:14px;color:var(--t2)}
+  @media (max-width:720px){.gallery{grid-template-columns:1fr}.shots{padding:6% 3% 10% 2%}}
   /* sections */
   section{padding:72px 0}
   .kick{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
@@ -187,34 +201,10 @@
       </div>
     </div>
 
-    <div class="mock" aria-hidden="true">
-      <div class="mhead">
-        <div class="lights"><i></i><i></i><i></i><span style="margin-left:6px">Zorvia · TV mode</span></div>
-        <div class="badges"><span class="b4k">4K HDR</span><span class="blive">LIVE</span></div>
-      </div>
-      <div class="mbody">
-        <div class="mside">
-          <div class="mi on">▶ Live TV</div>
-          <div class="mi">Movies</div>
-          <div class="mi">Series</div>
-          <div class="mlab">CHANNELS</div>
-          <div class="ch on">101 · My Channel HD</div>
-          <div class="ch">102 · Sports Demo</div>
-          <div class="ch">103 · News 24</div>
-        </div>
-        <div>
-          <div class="screen">
-            <div class="play"><svg width="24" height="24" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="#141100"/></svg></div>
-            <div class="tc">Your stream · 4K<span>01:42:10 / 02:28:00</span></div>
-          </div>
-          <div class="epg">
-            <div class="row"><b>101 · My Channel HD</b><span class="mono">54m left</span></div>
-            <div class="bar"><i></i></div>
-            <div class="row"><span>Next: Evening show</span><span class="mono">21:30</span></div>
-          </div>
-        </div>
-      </div>
-      <div class="remote"><span><b>OK</b>Select</span><span><b>EPG</b>Guide</span><span><b>FAV</b>Save</span></div>
+    <div class="shots">
+      <figure class="shot s-back"><img src="shots/dash.webp" width="760" height="353" alt="Home screen with Live TV, Movies and Series" loading="eager"></figure>
+      <figure class="shot s-main"><img src="shots/live.webp" width="760" height="353" alt="Live TV with channel list, preview and TV guide" loading="eager"></figure>
+      <figure class="shot s-front"><img src="shots/home.webp" width="760" height="353" alt="Your playlists and free trial" loading="eager"></figure>
     </div>
   </div>
 </section>
@@ -230,6 +220,19 @@
       <div class="card"><div class="fi"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg></div><div><h3>Favorites &amp; recent</h3><p>Keep your channels and films one tap away and continue where you stopped.</p></div></div>
       <div class="card"><div class="fi"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8"/></svg></div><div><h3>Made for TV</h3><p>Full landscape interface that works with the Android TV and Fire TV remote.</p></div></div>
       <div class="card"><div class="fi"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 10V8a6 6 0 0 1 12 0v2M5 10h14v10H5z"/></svg></div><div><h3>Private</h3><p>Your playlists stay on your device. No account, no tracking, no ads.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="screens">
+  <div class="wrap">
+    <span class="kick">Screens</span>
+    <h2>See how it works</h2>
+    <div class="gallery">
+      <figure><div class="shot"><img src="shots/dash.webp" width="760" height="353" alt="Home screen" loading="lazy"></div><figcaption>Home<span>Live TV, movies, series, favorites and recent in one place.</span></figcaption></figure>
+      <figure><div class="shot"><img src="shots/live.webp" width="760" height="353" alt="Live TV screen" loading="lazy"></div><figcaption>Live TV<span>Groups on the left, channels in the middle, preview and TV guide on the right.</span></figcaption></figure>
+      <figure><div class="shot"><img src="shots/add.webp" width="760" height="353" alt="Add playlist screen" loading="lazy"></div><figcaption>Add your playlist<span>Xtream Codes login or an M3U link. Saved only on your device.</span></figcaption></figure>
+      <figure><div class="shot"><img src="shots/home.webp" width="760" height="353" alt="Playlists screen" loading="lazy"></div><figcaption>Your playlists<span>Switch between playlists. 7 days free, then 5€ for life.</span></figcaption></figure>
     </div>
   </div>
 </section>
