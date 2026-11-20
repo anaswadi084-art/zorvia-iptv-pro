@@ -98,6 +98,22 @@
   .gallery figcaption{margin-top:12px;font-weight:600}
   .gallery figcaption span{display:block;font-weight:400;font-size:14px;color:var(--t2)}
   @media (max-width:720px){.gallery{grid-template-columns:1fr}.shots{padding:6% 3% 10% 2%}}
+  /* price bar + get pro */
+  .pricebar{position:relative;display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:center;margin:0 auto 34px;max-width:760px;padding:10px 10px 10px 18px;border-radius:16px;text-decoration:none;background:linear-gradient(#11151f,#11151f) padding-box,linear-gradient(120deg,#FFF275,#B8A342 40%,#7BD7C7) border-box;border:1.5px solid transparent;box-shadow:0 12px 40px rgba(245,225,108,.12);overflow:hidden}
+  .pricebar::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(255,242,117,.10) 50%,transparent 70%);transform:translateX(-100%);animation:shine 4.5s ease-in-out infinite;pointer-events:none}
+  @keyframes shine{60%,100%{transform:translateX(100%)}}
+  .pricebar .pb-ico{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:rgba(245,225,108,.12);color:var(--gold)}
+  .pricebar .pb-txt{font-size:14.5px;color:var(--t2)}
+  .pricebar .pb-txt b{color:var(--t);font-weight:700}
+  .pricebar .pb-price{font-family:var(--head);font-size:30px;font-weight:700;line-height:1;color:var(--gold);text-shadow:0 0 22px rgba(245,225,108,.35)}
+  .pricebar .pb-price small{font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--t2);margin-left:6px;text-shadow:none}
+  .pricebar .pb-cta{display:inline-flex;align-items:center;gap:6px;min-height:42px;padding:0 16px;border-radius:11px;background:linear-gradient(180deg,var(--gold2),var(--gold));color:#141100;font-family:var(--mono);font-weight:700;font-size:13px;letter-spacing:.04em}
+  .pricebar:hover .pb-cta{box-shadow:var(--glow)}
+  .pricebar:focus-visible{outline:none;box-shadow:var(--glow)}
+  .priceline{display:flex;align-items:center;gap:10px;margin-top:16px;font-size:14px;color:var(--t2)}
+  .priceline b{font-family:var(--head);font-size:20px;color:var(--gold)}
+  @media (prefers-reduced-motion:reduce){.pricebar::after{animation:none}}
+  @media (max-width:720px){.pricebar{gap:10px;padding:12px}.pricebar .pb-txt{flex-basis:100%;text-align:center;order:3}.pricebar .pb-price{font-size:26px}}
   /* sections */
   section{padding:72px 0}
   .kick{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
@@ -174,14 +190,25 @@
     <nav class="links" aria-label="Main">
       <a href="#features">Features</a><a href="#install">Install</a><a href="#premium">Premium</a><a href="#faq">FAQ</a>
     </nav>
+    <div style="display:flex;gap:8px;align-items:center">
+    <a class="btn glass sm navcta" href="#premium"><svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>Get Pro · <b>30€</b></a>
     <a class="btn gold sm navcta dl" href="#">
       <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download
     </a>
+    </div>
   </div>
 </header>
 
 <main id="top">
 <section class="hero" id="showcase">
+  <div class="wrap" style="position:relative;z-index:1">
+    <a class="pricebar" href="#premium" aria-label="Lifetime license 30 euro, get Pro">
+      <span class="pb-ico"><svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg></span>
+      <span class="pb-price">30€<small>LIFETIME</small></span>
+      <span class="pb-txt"><b>Pay once, use forever.</b> Try free for 7 days first.</span>
+      <span class="pb-cta"><svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>Get Pro</span>
+    </a>
+  </div>
   <div class="wrap hgrid">
     <div>
       <span class="chip"><span class="dot"></span>7 days free · Media player only</span>
@@ -195,6 +222,7 @@
           <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6M12 17h.01"/></svg>How to install
         </a>
       </div>
+      <div class="priceline"><b>30€</b> one time · lifetime license · no subscription</div>
       <div class="compat">
         <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="2" y="4" width="15" height="11" rx="2"/><path d="M6 19h7M18 8h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-3a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/></svg>
         Android 7+ · Android TV · Google TV · Fire TV Stick
@@ -232,7 +260,7 @@
       <figure><div class="shot"><img src="shots/dash.webp" width="760" height="353" alt="Home screen" loading="lazy"></div><figcaption>Home<span>Live TV, movies, series, favorites and recent in one place.</span></figcaption></figure>
       <figure><div class="shot"><img src="shots/live.webp" width="760" height="353" alt="Live TV screen" loading="lazy"></div><figcaption>Live TV<span>Groups on the left, channels in the middle, preview and TV guide on the right.</span></figcaption></figure>
       <figure><div class="shot"><img src="shots/add.webp" width="760" height="353" alt="Add playlist screen" loading="lazy"></div><figcaption>Add your playlist<span>Xtream Codes login or an M3U link. Saved only on your device.</span></figcaption></figure>
-      <figure><div class="shot"><img src="shots/home.webp" width="760" height="353" alt="Playlists screen" loading="lazy"></div><figcaption>Your playlists<span>Switch between playlists. 7 days free, then 5€ for life.</span></figcaption></figure>
+      <figure><div class="shot"><img src="shots/home.webp" width="760" height="353" alt="Playlists screen" loading="lazy"></div><figcaption>Your playlists<span>Switch between playlists. 7 days free, then 30€ for life.</span></figcaption></figure>
     </div>
   </div>
 </section>
@@ -271,7 +299,7 @@
     <div class="prem">
       <div>
         <div class="ptop"><span class="ptag">PREMIUM</span><span class="pok"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.4 1.8 3 .2.9 2.9 2.2 2-1 2.9 1 2.9-2.2 2-.9 2.9-3 .2L12 21l-2.4-1.8-3-.2-.9-2.9-2.2-2 1-2.9-1-2.9 2.2-2 .9-2.9 3-.2z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg>One-time payment</span></div>
-        <div class="price"><b>5€</b><span>ONE TIME · LIFETIME</span></div>
+        <div class="price"><b>30€</b><span>ONE TIME · LIFETIME</span></div>
         <div class="step"><span class="num">1</span><p>Try everything free for 7 days.</p></div>
         <div class="step"><span class="num">2</span><p>Open the app › <strong>Activate</strong> › tap <strong>Premium on WhatsApp</strong> to send your device code.</p></div>
         <div class="step"><span class="num">3</span><p>Pay by bank transfer or Wise and receive your activation code.</p></div>
@@ -293,7 +321,7 @@
     <h2>Questions, answered</h2>
     <details><summary>Does Zorvia IPTV Pro include channels or films?</summary><p>No. It is a media player only and comes with no content. You add playlists from a provider you are legally allowed to use.</p></details>
     <details><summary>Which formats are supported?</summary><p>M3U / M3U8 links (including get.php links), Xtream Codes logins, HLS and MPEG-TS streams, MP4 and MKV files.</p></details>
-    <details><summary>What happens after the 7-day trial?</summary><p>The app asks for an activation code. Activation costs 5€ once and works for life on that device.</p></details>
+    <details><summary>What happens after the 7-day trial?</summary><p>The app asks for an activation code. Activation costs 30€ once and works for life on that device.</p></details>
     <details><summary>I changed my phone or TV. Do I pay again?</summary><p>Each activation is linked to one device. Contact us on WhatsApp with your new device code.</p></details>
     <details><summary>How do I update the app?</summary><p>The app tells you when a new version is ready. Install it over the old one; your playlists and activation stay.</p></details>
   </div>
@@ -320,7 +348,7 @@
   const GITHUB_USER = "anaswadi084-art", REPO = "zorvia-iptv-pro", WHATSAPP = "15819062779", DOWNLOADER_CODE = "4704271";
   const apk = `https://github.com/${GITHUB_USER}/${REPO}/releases/latest/download/Zorvia-IPTV-Pro.apk`;
   document.querySelectorAll('.dl').forEach(a => a.href = apk);
-  document.getElementById('wa').href = `https://wa.me/${WHATSAPP}?text=` + encodeURIComponent("Hello, I want Premium for Zorvia IPTV Pro (5€ lifetime). My device code is: ");
+  document.getElementById('wa').href = `https://wa.me/${WHATSAPP}?text=` + encodeURIComponent("Hello, I want Premium for Zorvia IPTV Pro (30€ lifetime). My device code is: ");
   document.querySelectorAll('.dlcode').forEach(e => e.textContent = DOWNLOADER_CODE);
   document.querySelectorAll('.copy').forEach(b => b.addEventListener('click', () => {
     try { navigator.clipboard.writeText(DOWNLOADER_CODE); } catch (e) {}
