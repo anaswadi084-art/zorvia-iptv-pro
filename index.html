@@ -332,6 +332,7 @@
   <div class="wrap">
     <p><b>Zorvia IPTV Pro</b> — media player for Android, Android TV and Fire TV.</p>
     <p>Zorvia IPTV Pro does not provide, host or sell any channels, films or other content. Users must add their own playlists from providers they are legally entitled to use.</p>
+    <p>Privacy: this site counts visits and downloads by country only. No cookies, no tracking, no personal data.</p>
   </div>
 </footer>
 
@@ -346,7 +347,16 @@
 
 <script>
   const GITHUB_USER = "anaswadi084-art", REPO = "zorvia-iptv-pro", WHATSAPP = "15819062779", DOWNLOADER_CODE = "4704271";
-  const apk = `https://github.com/${GITHUB_USER}/${REPO}/releases/latest/download/Zorvia-IPTV-Pro.apk`;
+  const API = "https://zorvia-api.anaswadi084.workers.dev";
+  const apk = `${API}/download?from=site`;
+  // visit counter: once a day per browser, country only (no cookies, no personal data)
+  try {
+    const d = new Date().toISOString().slice(0, 10);
+    if (localStorage.getItem('zv_seen') !== d) {
+      localStorage.setItem('zv_seen', d);
+      fetch(`${API}/v?p=${encodeURIComponent(location.pathname)}`, {mode: 'no-cors', keepalive: true}).catch(() => {});
+    }
+  } catch (e) {}
   document.querySelectorAll('.dl').forEach(a => a.href = apk);
   document.getElementById('wa').href = `https://wa.me/${WHATSAPP}?text=` + encodeURIComponent("Hello, I want Premium for Zorvia IPTV Pro (30€ lifetime). My device code is: ");
   document.querySelectorAll('.dlcode').forEach(e => e.textContent = DOWNLOADER_CODE);
