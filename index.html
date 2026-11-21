@@ -358,6 +358,39 @@
     }
   } catch (e) {}
   document.querySelectorAll('.dl').forEach(a => a.href = apk);
+  // Samsung (Tizen), LG (webOS) and Hisense (VIDAA) smart TVs cannot install Android apps: explain instead of failing.
+  (function () {
+    var ua = navigator.userAgent || '';
+    if (!/Tizen|SMART-TV|SmartTV|Web0S|webOS|NetCast|VIDAA/i.test(ua) || /Android/i.test(ua)) return;
+    var brand = /Tizen|SMART-TV/i.test(ua) ? 'Samsung TVs' : /Web0S|webOS|NetCast/i.test(ua) ? 'LG TVs' : /VIDAA/i.test(ua) ? 'Hisense VIDAA TVs' : 'This TV';
+    var css = document.createElement('style');
+    css.textContent = '#tvnote{position:fixed;top:0;left:0;right:0;bottom:0;z-index:100;display:none;align-items:center;justify-content:center;background:rgba(5,7,10,.85);padding:24px}' +
+      '#tvnote.on{display:flex}' +
+      '#tvnote .tvn-card{max-width:640px;background:var(--s1);border:1px solid rgba(245,225,108,.4);border-radius:18px;padding:32px;box-shadow:var(--glow)}' +
+      '#tvnote .tvn-k{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin:0 0 8px}' +
+      '#tvnote h2{font-family:var(--head);font-size:28px;line-height:1.25;margin:0 0 14px}' +
+      '#tvnote p{color:var(--t2);font-size:18px;margin:0 0 12px}#tvnote b{color:var(--t)}#tvnote .tvn-s{font-size:15px}' +
+      '#tvnote .tvn-ok{margin-top:8px;background:var(--gold);color:#141100;border:0;border-radius:10px;padding:13px 24px;font-weight:700;font-size:17px;cursor:pointer}' +
+      '#tvnote .tvn-ok:focus{outline:3px solid #fff;outline-offset:3px}';
+    document.head.appendChild(css);
+    var box = document.createElement('div');
+    box.id = 'tvnote';
+    box.setAttribute('role', 'dialog');
+    box.setAttribute('aria-modal', 'true');
+    box.setAttribute('aria-labelledby', 'tvnote-t');
+    box.innerHTML = '<div class="tvn-card"><p class="tvn-k">Smart TV detected</p>' +
+      '<h2 id="tvnote-t">' + brand + ' can’t install Android apps</h2>' +
+      '<p>This TV runs its own system (Samsung Tizen, LG webOS or VIDAA), so no Android app can be installed on it, including Zorvia IPTV Pro.</p>' +
+      '<p><b>Easy fix:</b> plug a <b>Fire TV Stick</b>, a <b>Google TV / Chromecast</b> or an <b>Android TV box</b> into the HDMI port. Then open <b>Downloader</b> and type the code <b>' + DOWNLOADER_CODE + '</b>.</p>' +
+      '<p class="tvn-s">Works on Android TV, Google TV, Fire TV, Android TV boxes and Android phones and tablets.</p>' +
+      '<button type="button" class="tvn-ok">OK, got it</button></div>';
+    document.body.appendChild(box);
+    var ok = box.querySelector('.tvn-ok');
+    ok.addEventListener('click', function () { box.classList.remove('on'); });
+    document.querySelectorAll('.dl').forEach(function (a) {
+      a.addEventListener('click', function (e) { e.preventDefault(); box.classList.add('on'); ok.focus(); });
+    });
+  })();
   document.getElementById('wa').href = `https://wa.me/${WHATSAPP}?text=` + encodeURIComponent("Hello, I want Premium for Zorvia IPTV Pro (30€ lifetime). My device code is: ");
   document.querySelectorAll('.dlcode').forEach(e => e.textContent = DOWNLOADER_CODE);
   document.querySelectorAll('.copy').forEach(b => b.addEventListener('click', () => {
