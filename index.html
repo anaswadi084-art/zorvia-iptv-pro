@@ -328,15 +328,12 @@
         <div class="ptop"><span class="ptag">PREMIUM</span><span class="pok"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.4 1.8 3 .2.9 2.9 2.2 2-1 2.9 1 2.9-2.2 2-.9 2.9-3 .2L12 21l-2.4-1.8-3-.2-.9-2.9-2.2-2 1-2.9-1-2.9 2.2-2 .9-2.9 3-.2z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg>One-time payment</span></div>
         <div class="price"><b>30€</b><span>ONE TIME · LIFETIME</span></div>
         <div class="step"><span class="num">1</span><p>Try everything free for 7 days.</p></div>
-        <div class="step"><span class="num">2</span><p>Open the app › <strong>Activate</strong> › tap <strong>Premium on WhatsApp</strong> to send your device code.</p></div>
-        <div class="step"><span class="num">3</span><p>Pay by bank transfer or Wise and receive your activation code.</p></div>
+        <div class="step"><span class="num">2</span><p>Open the app › <strong>Activate</strong> › tap <strong>Buy now</strong>, or press the button here and enter your device code.</p></div>
+        <div class="step"><span class="num">3</span><p>Pay by card or PayPal. Your device unlocks by itself, no code to type.</p></div>
       </div>
       <div>
-        <a class="wa" id="wa" href="#" target="_blank" rel="noopener">
-          <span class="bd"><svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v11H8l-4 4z" fill="#25D366"/><path d="M9.2 7.2c.3-.3.7-.3.9 0l.8 1c.2.3.2.6 0 .9l-.4.5c.4.8 1 1.4 1.8 1.8l.5-.4c.3-.2.6-.2.9 0l1 .8c.3.2.3.6 0 .9l-.6.6c-.4.4-1 .5-1.5.3-2-.8-3.5-2.3-4.3-4.3-.2-.5-.1-1.1.3-1.5z" fill="#fff"/></svg></span>
-          <span>Premium<small>on WhatsApp</small></span>
-        </a>
-        <p class="note">Instant activation code · Direct human support</p>
+        <a class="btn gold" href="buy.html" style="width:100%;justify-content:center">Buy now · <b>30€</b></a>
+        <p class="note">Card or PayPal · activated automatically</p>
       </div>
     </div>
   </div>
@@ -348,7 +345,7 @@
     <h2>Questions, answered</h2>
     <details><summary>Does Zorvia IPTV Pro include channels or films?</summary><p>No. It is a media player only and comes with no content. You add playlists from a provider you are legally allowed to use.</p></details>
     <details><summary>Which formats are supported?</summary><p>M3U / M3U8 links (including get.php links), Xtream Codes logins, HLS and MPEG-TS streams, MP4 and MKV files.</p></details>
-    <details><summary>What happens after the 7-day trial?</summary><p>The app asks for an activation code. Activation costs 30€ once and works for life on that device.</p></details>
+    <details><summary>What happens after the 7-day trial?</summary><p>The app asks you to activate it. Activation costs 30€ once and works for life on that device: buy it online by card or PayPal and the app unlocks by itself.</p></details>
     <details><summary>I changed my phone or TV. Do I pay again?</summary><p>Each activation is linked to one device. Contact us on WhatsApp with your new device code.</p></details>
     <details><summary>How do I update the app?</summary><p>The app tells you when a new version is ready. Install it over the old one; your playlists and activation stay.</p></details>
     <details><summary>Does it work on Windows, Samsung or LG TVs?</summary><p>Yes on Windows 10 and 11 (64-bit): download the Windows version above. Samsung (Tizen) and LG (webOS) smart TVs cannot install Android apps; plug in a Fire TV Stick, a Google TV / Chromecast or an Android TV box instead.</p></details>
@@ -424,7 +421,6 @@
       a.addEventListener('click', function (e) { e.preventDefault(); box.classList.add('on'); ok.focus(); });
     });
   })();
-  document.getElementById('wa').href = `https://wa.me/${WHATSAPP}?text=` + encodeURIComponent("Hello, I want Premium for Zorvia IPTV Pro (30€ lifetime). My device code is: ");
   document.querySelectorAll('.dlcode').forEach(e => e.textContent = DOWNLOADER_CODE);
   document.querySelectorAll('.copy').forEach(b => b.addEventListener('click', () => {
     try { navigator.clipboard.writeText(DOWNLOADER_CODE); } catch (e) {}
