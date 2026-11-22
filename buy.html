@@ -146,7 +146,7 @@
         var left = c.offerEnd - Date.now();
         if (left <= 0) { location.reload(); return; }
         var d = Math.floor(left / 864e5), h = Math.floor(left % 864e5 / 36e5), m = Math.floor(left % 36e5 / 6e4);
-        $('offerLine').textContent = 'Offer price until ' + end.toLocaleDateString(undefined, {day: 'numeric', month: 'long'}) + ', then ' + money(c.regular) + '. Ends in ' + (d ? d + 'd ' : '') + h + 'h ' + m + 'm.';
+        $('offerLine').textContent = 'Offer price until ' + end.toLocaleDateString('en-GB', {day: 'numeric', month: 'long'}) + ', then ' + money(c.regular) + '. Ends in ' + (d ? d + 'd ' : '') + h + 'h ' + m + 'm.';
       };
       line(); setInterval(line, 30000);
       $('offerLine').classList.remove('hidden');
