@@ -84,7 +84,7 @@
       <p class="hint">Secure payment by PayPal: pay with your PayPal account or a bank card. By paying you accept the <a href="terms.html">terms of use</a>.</p>
     </div>
 
-    <p class="muted" style="font-size:14px">No PayPal or card? <a href="contact.html">Contact us on WhatsApp</a> for other payment methods.</p>
+    <p class="muted" style="font-size:14px">A question? <a href="contact.html">Contact us</a>.</p>
   </section>
 
   <section id="ok" class="hidden done card" tabindex="-1">
@@ -131,7 +131,7 @@
   function fail(m){ $('ppLoading') && ($('ppLoading').textContent = ''); var p = $('pp'); p.innerHTML = '<p class="err">' + m + '</p>'; }
 
   fetch(API + '/api/pay/config').then(function(r){ return r.json(); }).then(function(c){
-    if (!c.enabled || !c.clientId) return fail('Online payment is not available right now. Please <a href="contact.html">contact us on WhatsApp</a>.');
+    if (!c.enabled || !c.clientId) return fail('Online payment is not available right now. Please try again later or <a href="contact.html">contact us</a>.');
     if (c.env !== 'live') $('testNote').classList.remove('hidden');
     var s = document.createElement('script');
     s.src = 'https://www.paypal.com/sdk/js?client-id=' + encodeURIComponent(c.clientId) + '&currency=' + encodeURIComponent(c.currency) + '&intent=capture&components=buttons';
@@ -159,7 +159,7 @@
           }).catch(function(e){ setErr(e.message); });
         },
         onCancel: function(){ setErr('Payment cancelled. You were not charged.'); },
-        onError: function(e){ if (String(e && e.message || e).indexOf('already active') < 0) setErr('PayPal error. Please try again, or contact us on WhatsApp.'); }
+        onError: function(e){ if (String(e && e.message || e).indexOf('already active') < 0) setErr('PayPal error. Please try again, or contact us.'); }
       }).render('#pp');
     };
     document.head.appendChild(s);
