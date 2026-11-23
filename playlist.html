@@ -31,7 +31,7 @@
   input:focus,select:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(245,225,108,.18)}
   .row{display:flex;gap:12px}.row>div{flex:1}
   .seg{display:flex;background:#0b0e14;border:1px solid #2a3142;border-radius:12px;padding:4px;margin-top:6px}
-  .seg button{flex:1;border:0;background:transparent;color:var(--t2);font-weight:700;padding:10px;border-radius:9px;cursor:pointer;font-size:15px}
+  .seg button{flex:1;min-width:0;border:0;background:transparent;color:var(--t2);font-weight:700;padding:10px;border-radius:9px;cursor:pointer;font-size:15px}
   .seg button[aria-pressed=true]{background:var(--gold);color:#141100}
   .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--gold);color:#141100;font-weight:800;border:0;text-decoration:none;padding:14px 22px;border-radius:12px;font-size:16px;cursor:pointer;width:100%;margin-top:18px}
   .btn.ghost{background:transparent;color:var(--t);border:1px solid #2a3142}
@@ -97,6 +97,7 @@
       <div class="seg" role="group" aria-label="Playlist type">
         <button type="button" id="tX" aria-pressed="true">Xtream Codes</button>
         <button type="button" id="tM" aria-pressed="false">M3U link</button>
+        <button type="button" id="tP" aria-pressed="false">MAC Portal</button>
       </div>
       <div id="fX">
         <label for="server">Server address</label>
@@ -109,6 +110,11 @@
       <div id="fM" class="hidden">
         <label for="url">Playlist link (M3U)</label>
         <input id="url" placeholder="http://…/get.php?username=…&password=…&type=m3u_plus" autocapitalize="off" spellcheck="false">
+      </div>
+      <div id="fP" class="hidden">
+        <label for="purl">Portal address</label>
+        <input id="purl" placeholder="http://portal.example.com:8080/c/" autocapitalize="off" spellcheck="false">
+        <p class="note">Give your provider this MAC address so he activates it on his portal: <b id="pMac"></b></p>
       </div>
       <button class="btn" id="add">Add to my TV</button>
       <div class="err" id="addErr" role="alert"></div>
@@ -149,7 +155,7 @@
   }
   function show(j){
     $('login').classList.add('hidden'); $('panel').classList.remove('hidden');
-    $('dMac').textContent = j.mac; $('dCode').textContent = j.device;
+    $('dMac').textContent = String(j.mac || '').toUpperCase(); $('pMac').textContent = String(j.mac || '').toUpperCase(); $('dCode').textContent = j.device;
     var active = j.status === 'active';
     $('dStatus').textContent = active ? 'Activated ✓' : (j.status === 'revoked' ? 'Blocked' : 'Free trial');
     $('price').textContent = j.price.replace('.', '.') + '€';
@@ -157,24 +163,35 @@
     $('payCard').classList.toggle('hidden', active || !j.webPay || j.status === 'revoked');
     $('list').innerHTML = j.playlists.length ? j.playlists.map(function(p){
       var what = p.type === 'xtream' ? (p.server + ' · ' + p.user) : p.url;
-      return '<div class="pl"><div><b>' + esc(p.name) + '</b><small>' + esc(p.type === 'xtream' ? 'Xtream Codes' : 'M3U') + ' — ' + esc(what) + '</small></div>' +
+      var label = p.type === 'xtream' ? 'Xtream Codes' : p.type === 'portal' ? 'MAC Portal' : 'M3U';
+      return '<div class="pl"><div><b>' + esc(p.name) + '</b><small>' + esc(label) + ' — ' + esc(what) + '</small></div>' +
              '<button class="del" data-id="' + esc(p.id) + '">Delete</button></div>';
     }).join('') : '<p class="muted" style="margin:0">No playlist yet. Add one below.</p>';
   }
   function reload(){ return post('/api/web/login', auth).then(show); }
   $('go').addEventListener('click', login);
   $('key').addEventListener('keydown', function(e){ if (e.key === 'Enter') login(); });
-  $('tX').addEventListener('click', function(){ type = 'xtream'; $('tX').setAttribute('aria-pressed', 'true'); $('tM').setAttribute('aria-pressed', 'false'); $('fX').classList.remove('hidden'); $('fM').classList.add('hidden'); });
-  $('tM').addEventListener('click', function(){ type = 'm3u'; $('tM').setAttribute('aria-pressed', 'true'); $('tX').setAttribute('aria-pressed', 'false'); $('fM').classList.remove('hidden'); $('fX').classList.add('hidden'); });
+  var tabs = {xtream: ['tX', 'fX'], m3u: ['tM', 'fM'], portal: ['tP', 'fP']};
+  function setType(t) {
+    type = t;
+    Object.keys(tabs).forEach(function(k){
+      $(tabs[k][0]).setAttribute('aria-pressed', k === t ? 'true' : 'false');
+      $(tabs[k][1]).classList.toggle('hidden', k !== t);
+    });
+  }
+  $('tX').addEventListener('click', function(){ setType('xtream'); });
+  $('tM').addEventListener('click', function(){ setType('m3u'); });
+  $('tP').addEventListener('click', function(){ setType('portal'); });
   $('add').addEventListener('click', function(){
     $('addErr').textContent = ''; $('addOk').textContent = '';
     var body = {id: auth.id, key: auth.key, name: $('pname').value.trim() || 'My playlist', type: type};
     if (type === 'xtream') { body.server = $('server').value.trim(); body.user = $('user').value.trim(); body.pass = $('pass').value; }
+    else if (type === 'portal') body.url = $('purl').value.trim();
     else body.url = $('url').value.trim();
     $('add').disabled = true;
     post('/api/web/playlist/add', body).then(function(){
       $('addOk').textContent = 'Added! On your TV, press Reload in the Zorvia app.';
-      ['pname','server','user','pass','url'].forEach(function(i){ $(i).value = ''; });
+      ['pname','server','user','pass','url','purl'].forEach(function(i){ $(i).value = ''; });
       return reload();
     }).catch(function(e){ $('addErr').textContent = e.message; })
       .then(function(){ $('add').disabled = false; });
