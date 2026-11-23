@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Add a playlist to your TV — Zorvia</title>
+<meta name="description" content="Add your M3U link or Xtream Codes login to Zorvia from your phone or computer, using the MAC address and device key shown in the app.">
+<link rel="canonical" href="https://zorviaplayer.site/playlist.html">
+<meta name="robots" content="noindex, follow">
+<meta name="theme-color" content="#0b0e14">
+<link rel="icon" type="image/png" sizes="48x48" href="favicon-48.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+  :root{--bg:#0b0e14;--s1:#121620;--s2:#181d28;--line:rgba(255,255,255,.08);--gold:#F5E16C;--teal:#7BD7C7;--red:#F87171;--t:#F8FAFC;--t2:#9EABC0}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--t);font:16px/1.6 "Segoe UI",system-ui,-apple-system,Roboto,sans-serif}
+  a{color:var(--gold)}
+  header{border-bottom:1px solid var(--line);background:rgba(11,14,20,.9)}
+  .bar{max-width:860px;margin:0 auto;padding:16px 22px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  .brand{display:flex;align-items:center;gap:10px;color:var(--t);text-decoration:none;font-weight:700;font-size:18px}
+  .brand img{width:36px;height:36px;border-radius:50%}
+  .brand em{font-style:normal;color:var(--gold)}
+  main{max-width:600px;margin:0 auto;padding:30px 22px 70px}
+  h1{font-size:30px;line-height:1.2;margin:0 0 6px}
+  h2{font-size:20px;margin:0 0 12px}
+  .muted{color:var(--t2)}
+  .card{background:var(--s1);border:1px solid var(--line);border-radius:16px;padding:22px;margin:18px 0}
+  label{display:block;font-weight:700;margin:14px 0 6px}
+  input,select{width:100%;background:#0b0e14;border:1px solid #2a3142;color:var(--t);border-radius:12px;padding:13px 14px;font:600 17px/1.2 "Segoe UI",system-ui,sans-serif}
+  input.code{font:600 20px/1 ui-monospace,Consolas,monospace;letter-spacing:.06em}
+  input:focus,select:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(245,225,108,.18)}
+  .row{display:flex;gap:12px}.row>div{flex:1}
+  .seg{display:flex;background:#0b0e14;border:1px solid #2a3142;border-radius:12px;padding:4px;margin-top:6px}
+  .seg button{flex:1;border:0;background:transparent;color:var(--t2);font-weight:700;padding:10px;border-radius:9px;cursor:pointer;font-size:15px}
+  .seg button[aria-pressed=true]{background:var(--gold);color:#141100}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--gold);color:#141100;font-weight:800;border:0;text-decoration:none;padding:14px 22px;border-radius:12px;font-size:16px;cursor:pointer;width:100%;margin-top:18px}
+  .btn.ghost{background:transparent;color:var(--t);border:1px solid #2a3142}
+  .btn:disabled{opacity:.6;cursor:wait}
+  .err{color:var(--red);font-size:15px;min-height:22px;margin:10px 0 0}
+  .ok{color:var(--teal);font-size:15px;min-height:22px;margin:10px 0 0}
+  .pl{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-top:1px solid var(--line)}
+  .pl:first-child{border-top:0}
+  .pl b{display:block}.pl small{color:var(--t2);word-break:break-all}
+  .del{background:transparent;border:1px solid rgba(248,113,113,.5);color:var(--red);border-radius:10px;padding:8px 12px;cursor:pointer;font-weight:700;flex:none}
+  .dev{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px}
+  .chip{background:var(--s2);border:1px solid var(--line);border-radius:999px;padding:4px 12px;font:600 14px ui-monospace,Consolas,monospace}
+  .pay{background:linear-gradient(135deg,rgba(245,225,108,.14),rgba(245,225,108,.04));border-color:rgba(245,225,108,.35)}
+  .hidden{display:none!important}
+  .note{font-size:13px;color:var(--t2);margin-top:14px}
+  footer{border-top:1px solid var(--line);color:var(--t2);font-size:14px}
+</style>
+</head>
+<body>
+<header><div class="bar">
+  <a class="brand" href="./"><img src="favicon-48.png" alt="" width="36" height="36">Zorvia <em>Player</em></a>
+  <a href="./" class="muted" style="text-decoration:none">Home</a>
+</div></header>
+<main>
+  <h1>Add a playlist to your TV</h1>
+  <p class="muted">Type your playlist here on your phone or computer. It appears in the Zorvia app on your TV: press <b>Reload</b> in the app.</p>
+
+  <!-- step 1: sign in with MAC + key -->
+  <section class="card" id="login">
+    <h2>Your device</h2>
+    <p class="muted" style="margin:0">Both are shown in the app, on the activation screen and under “Add playlist”.</p>
+    <label for="mac">MAC address</label>
+    <input id="mac" class="code" placeholder="00:00:00:00:00:00" autocomplete="off" autocapitalize="off" spellcheck="false">
+    <label for="key">Device key</label>
+    <input id="key" class="code" placeholder="6 digits" inputmode="numeric" maxlength="6" autocomplete="off">
+    <button class="btn" id="go">Continue</button>
+    <div class="err" id="loginErr" role="alert"></div>
+  </section>
+
+  <!-- step 2: manage playlists -->
+  <section id="panel" class="hidden">
+    <div class="card">
+      <h2>Device</h2>
+      <div class="dev"><span class="chip" id="dMac"></span><span class="chip" id="dCode"></span><span class="chip" id="dStatus"></span></div>
+    </div>
+
+    <div class="card pay hidden" id="payCard">
+      <h2>Activate for life</h2>
+      <p class="muted" style="margin:0 0 4px">One payment of <b id="price" style="color:var(--gold)">7.99€</b>, no subscription. The app unlocks by itself.</p>
+      <a class="btn" id="payLink" href="buy.html">Pay with card or PayPal</a>
+    </div>
+
+    <div class="card">
+      <h2>Your playlists</h2>
+      <div id="list"></div>
+    </div>
+
+    <div class="card">
+      <h2>Add a playlist</h2>
+      <label for="pname">Name</label>
+      <input id="pname" placeholder="My playlist" maxlength="60">
+      <label>Type</label>
+      <div class="seg" role="group" aria-label="Playlist type">
+        <button type="button" id="tX" aria-pressed="true">Xtream Codes</button>
+        <button type="button" id="tM" aria-pressed="false">M3U link</button>
+      </div>
+      <div id="fX">
+        <label for="server">Server address</label>
+        <input id="server" placeholder="http://example.com:8080" autocapitalize="off" spellcheck="false">
+        <div class="row">
+          <div><label for="user">Username</label><input id="user" autocapitalize="off" spellcheck="false" autocomplete="off"></div>
+          <div><label for="pass">Password</label><input id="pass" type="password" autocomplete="off"></div>
+        </div>
+      </div>
+      <div id="fM" class="hidden">
+        <label for="url">Playlist link (M3U)</label>
+        <input id="url" placeholder="http://…/get.php?username=…&password=…&type=m3u_plus" autocapitalize="off" spellcheck="false">
+      </div>
+      <button class="btn" id="add">Add to my TV</button>
+      <div class="err" id="addErr" role="alert"></div>
+      <div class="ok" id="addOk" role="status"></div>
+      <p class="note">Zorvia is a media player only and does not provide any channels. Add only playlists from providers you are allowed to use.</p>
+    </div>
+    <button class="btn ghost" id="out">Use another device</button>
+  </section>
+</main>
+<footer><div class="bar"><span>© <span id="yr">2026</span> Zorvia</span><span><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a> · <a href="contact.html">Contact</a></span></div></footer>
+<script>
+(function(){
+  var API = 'https://zorvia-api.anaswadi084.workers.dev';
+  var $ = function(id){ return document.getElementById(id); };
+  var auth = null, type = 'xtream';
+  $('yr').textContent = new Date().getFullYear();
+  function esc(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+  function post(path, body){
+    return fetch(API + path, {method:'POST', headers:{'content-type':'application/json'}, body: JSON.stringify(body)})
+      .then(function(r){ return r.json().then(function(j){ if (!r.ok) throw new Error(j.error || ('Error ' + r.status)); return j; }); });
+  }
+  // prefill from the QR code: playlist.html?mac=..&key=..
+  var q = new URLSearchParams(location.search);
+  if (q.get('mac')) $('mac').value = q.get('mac');
+  if (q.get('key')) $('key').value = q.get('key');
+  if (q.get('mac') && q.get('key')) { history.replaceState(null, '', location.pathname); setTimeout(login, 0); }
+
+  function login(){
+    var id = $('mac').value.trim(), key = $('key').value.replace(/\D/g, '');
+    $('loginErr').textContent = '';
+    if (!id || key.length !== 6) { $('loginErr').textContent = 'Enter the MAC address and the 6-digit device key from the app.'; return; }
+    $('go').disabled = true;
+    post('/api/web/login', {id: id, key: key}).then(function(j){
+      auth = {id: id, key: key};
+      show(j);
+    }).catch(function(e){ $('loginErr').textContent = e.message; })
+      .then(function(){ $('go').disabled = false; });
+  }
+  function show(j){
+    $('login').classList.add('hidden'); $('panel').classList.remove('hidden');
+    $('dMac').textContent = j.mac; $('dCode').textContent = j.device;
+    var active = j.status === 'active';
+    $('dStatus').textContent = active ? 'Activated ✓' : (j.status === 'revoked' ? 'Blocked' : 'Free trial');
+    $('price').textContent = j.price.replace('.', '.') + '€';
+    $('payLink').href = 'buy.html?device=' + encodeURIComponent(j.device);
+    $('payCard').classList.toggle('hidden', active || !j.webPay || j.status === 'revoked');
+    $('list').innerHTML = j.playlists.length ? j.playlists.map(function(p){
+      var what = p.type === 'xtream' ? (p.server + ' · ' + p.user) : p.url;
+      return '<div class="pl"><div><b>' + esc(p.name) + '</b><small>' + esc(p.type === 'xtream' ? 'Xtream Codes' : 'M3U') + ' — ' + esc(what) + '</small></div>' +
+             '<button class="del" data-id="' + esc(p.id) + '">Delete</button></div>';
+    }).join('') : '<p class="muted" style="margin:0">No playlist yet. Add one below.</p>';
+  }
+  function reload(){ return post('/api/web/login', auth).then(show); }
+  $('go').addEventListener('click', login);
+  $('key').addEventListener('keydown', function(e){ if (e.key === 'Enter') login(); });
+  $('tX').addEventListener('click', function(){ type = 'xtream'; $('tX').setAttribute('aria-pressed', 'true'); $('tM').setAttribute('aria-pressed', 'false'); $('fX').classList.remove('hidden'); $('fM').classList.add('hidden'); });
+  $('tM').addEventListener('click', function(){ type = 'm3u'; $('tM').setAttribute('aria-pressed', 'true'); $('tX').setAttribute('aria-pressed', 'false'); $('fM').classList.remove('hidden'); $('fX').classList.add('hidden'); });
+  $('add').addEventListener('click', function(){
+    $('addErr').textContent = ''; $('addOk').textContent = '';
+    var body = {id: auth.id, key: auth.key, name: $('pname').value.trim() || 'My playlist', type: type};
+    if (type === 'xtream') { body.server = $('server').value.trim(); body.user = $('user').value.trim(); body.pass = $('pass').value; }
+    else body.url = $('url').value.trim();
+    $('add').disabled = true;
+    post('/api/web/playlist/add', body).then(function(){
+      $('addOk').textContent = 'Added! On your TV, press Reload in the Zorvia app.';
+      ['pname','server','user','pass','url'].forEach(function(i){ $(i).value = ''; });
+      return reload();
+    }).catch(function(e){ $('addErr').textContent = e.message; })
+      .then(function(){ $('add').disabled = false; });
+  });
+  $('list').addEventListener('click', function(e){
+    var b = e.target.closest('.del'); if (!b) return;
+    if (!confirm('Delete this playlist from your TV?')) return;
+    post('/api/web/playlist/delete', {id: auth.id, key: auth.key, pid: b.dataset.id}).then(reload).catch(function(err){ alert(err.message); });
+  });
+  $('out').addEventListener('click', function(){ auth = null; $('panel').classList.add('hidden'); $('login').classList.remove('hidden'); $('key').value = ''; });
+})();
+</script>
+</body>
+</html>
