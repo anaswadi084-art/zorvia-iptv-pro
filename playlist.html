@@ -85,7 +85,6 @@
       <div class="head"><h2 style="margin:0">Your device</h2><span class="chip" id="dStatus"></span></div>
       <div class="info">
         <div class="irow"><span class="ilab">MAC address</span><b class="ival" id="dMac"></b><button type="button" class="cp" data-copy="dMac">Copy</button></div>
-        <div class="irow"><span class="ilab">Device key</span><b class="ival" id="dKey"></b><button type="button" class="cp" data-copy="dKey">Copy</button></div>
         <div class="irow"><span class="ilab">Device code</span><b class="ival" id="dCode"></b><button type="button" class="cp" data-copy="dCode">Copy</button></div>
       </div>
       <button class="btn ghost" id="reload" type="button">&#x21bb; Reload</button>
@@ -168,7 +167,7 @@
   }
   function show(j){
     $('login').classList.add('hidden'); $('panel').classList.remove('hidden');
-    $('dMac').textContent = String(j.mac || '').toUpperCase(); $('pMac').textContent = String(j.mac || '').toUpperCase(); $('dCode').textContent = j.device; $('dKey').textContent = auth.key;
+    $('dMac').textContent = String(j.mac || '').toUpperCase(); $('pMac').textContent = String(j.mac || '').toUpperCase(); $('dCode').textContent = j.device;
     var active = j.status === 'active';
     $('dStatus').textContent = active ? 'Activated ✓' : (j.status === 'revoked' ? 'Blocked' : 'Free trial');
     $('price').textContent = j.price.replace('.', '.') + '€';
