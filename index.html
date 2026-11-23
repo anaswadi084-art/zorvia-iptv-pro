@@ -181,9 +181,33 @@
   details[open] summary::after{transform:rotate(-135deg);margin-top:4px}
   summary:focus-visible{outline:none;box-shadow:var(--glow);border-radius:12px}
   details p{margin:0;padding:0 18px 18px;color:var(--t2)}
-  footer{border-top:1px solid var(--line);padding:36px 0 110px;color:var(--t2);font-size:13.5px}
-  footer b{color:var(--t);font-family:var(--head)}
-  footer a{color:var(--gold)}
+  footer{position:relative;margin-top:40px;padding:56px 0 110px;color:var(--t2);font-size:14px;background:linear-gradient(180deg,rgba(18,22,32,0) 0,var(--s1) 140px)}
+  footer:before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:linear-gradient(90deg,transparent,rgba(245,225,108,.45),transparent)}
+  .fcta{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;padding:30px 28px;margin:0 0 50px;border:1px solid rgba(245,225,108,.22);border-radius:22px;background:radial-gradient(120% 140% at 0% 0%,rgba(245,225,108,.10),transparent 55%),var(--s2)}
+  .fcta h3{margin:0;font:600 22px/1.25 var(--head);color:var(--t)}
+  .fcta p{margin:6px 0 0}
+  .fcta .acts{display:flex;gap:10px;flex-wrap:wrap}
+  .fbtn{white-space:nowrap;display:inline-flex;align-items:center;gap:8px;padding:12px 18px;border-radius:12px;font:600 14.5px var(--body);text-decoration:none;border:1px solid var(--line);color:var(--t);background:var(--s3)}
+  .fbtn.gold{background:var(--gold);color:#141100;border-color:transparent}
+  .fbtn:hover{filter:brightness(1.08)}
+  .fgrid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:34px}
+  .fbrand .fl{display:flex;align-items:center;gap:12px;text-decoration:none}
+  .fbrand img{width:44px;height:44px;border-radius:12px}
+  .fbrand .fl b{font:700 19px var(--head);color:var(--t)}
+  .fbrand .fl small{display:block;font:600 10.5px var(--mono);letter-spacing:.14em;color:var(--gold)}
+  .fbrand p{margin:16px 0 18px;max-width:340px;line-height:1.6}
+  .fplat{display:flex;flex-wrap:wrap;gap:8px}
+  .fplat span{padding:5px 10px;border:1px solid var(--line);border-radius:999px;font:500 12px var(--body);color:var(--t)}
+  .fcol h4{margin:4px 0 14px;font:600 12px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--t)}
+  .fcol a{display:block;padding:5px 0;color:var(--t2);text-decoration:none}
+  .fcol a:hover{color:var(--gold)}
+  .fcol a.hot{color:var(--gold)}
+  .ftrust{display:flex;flex-wrap:wrap;gap:10px 22px;margin:40px 0 0;padding:20px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-size:13px}
+  .ftrust span{display:inline-flex;align-items:center;gap:8px}
+  .ftrust svg{width:16px;height:16px;color:var(--cyan);flex:none}
+  .flegal{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-top:20px;font-size:12.5px;line-height:1.6}
+  .flegal p{margin:0;max-width:720px}
+  @media(max-width:860px){.fgrid{grid-template-columns:1fr 1fr}.fbrand{grid-column:1/-1}.fcta{padding:26px 20px}}
   /* mobile bottom bar */
   .dock{display:none;position:fixed;left:0;right:0;bottom:0;z-index:30;background:rgba(11,14,20,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:1px solid rgba(245,225,108,.12);padding:6px 6px calc(6px + env(safe-area-inset-bottom))}
   .dock nav{display:grid;grid-template-columns:repeat(4,1fr)}
@@ -358,10 +382,52 @@
 
 <footer>
   <div class="wrap">
-    <p><b>Zorvia IPTV Pro</b> — M3U and Xtream Codes media player for Android, Android TV, Fire TV and Windows.</p>
-    <p>Zorvia IPTV Pro does not provide, host or sell any channels, films or other content. Users must add their own playlists from providers they are legally entitled to use.</p>
-    <p>This site counts visits and downloads by country only, with no cookies.</p>
-    <p><a href="privacy.html">Privacy policy</a> · <a href="terms.html">Terms of use</a> · <a href="contact.html">Contact</a></p>
+    <div class="fcta">
+      <div>
+        <h3>Your playlists, one beautiful player.</h3>
+        <p>Try every feature free for 7 days. No card needed.</p>
+      </div>
+      <div class="acts">
+        <a href="#" class="fbtn gold dl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download free</a>
+        <a href="buy.html" class="fbtn">Buy lifetime · <span class="zp">29.99€</span></a>
+      </div>
+    </div>
+    <div class="fgrid">
+      <div class="fbrand">
+        <a class="fl" href="#top"><img src="apple-touch-icon.png" alt="" width="44" height="44" loading="lazy"><span><b>Zorvia</b><small>IPTV PRO</small></span></a>
+        <p>A fast M3U and Xtream Codes media player, designed for the big screen and the remote control.</p>
+        <div class="fplat"><span>Android</span><span>Android TV</span><span>Fire TV</span><span>Windows</span></div>
+      </div>
+      <nav class="fcol" aria-label="Product">
+        <h4>Product</h4>
+        <a href="#features">Features</a>
+        <a href="#screens">Screenshots</a>
+        <a href="#premium">Pricing</a>
+        <a href="black-friday.html" class="hot zoff">Black Friday deal</a>
+      </nav>
+      <nav class="fcol" aria-label="Get started">
+        <h4>Get started</h4>
+        <a href="#" class="dl">Download for Android</a>
+        <a href="#install">Install on Fire TV</a>
+        <a href="buy.html">Activate Premium</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <nav class="fcol" aria-label="Company">
+        <h4>Company</h4>
+        <a href="contact.html">Contact &amp; support</a>
+        <a href="privacy.html">Privacy policy</a>
+        <a href="terms.html">Terms of use</a>
+      </nav>
+    </div>
+    <div class="ftrust">
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>Secure checkout by PayPal · card or PayPal</span>
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>One payment, lifetime licence</span>
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/></svg>No account, no ads · no cookies on this site</span>
+    </div>
+    <div class="flegal">
+      <p><b style="color:var(--t)">Media player only.</b> Zorvia IPTV Pro does not provide, host or sell any channels, films or other content. Users must add their own playlists from providers they are legally entitled to use.</p>
+      <p>© <span class="fyear">2026</span> Zorvia. All rights reserved.</p>
+    </div>
   </div>
 </footer>
 
@@ -424,6 +490,7 @@
       a.addEventListener('click', function (e) { e.preventDefault(); box.classList.add('on'); ok.focus(); });
     });
   })();
+  document.querySelectorAll('.fyear').forEach(e => e.textContent = new Date().getFullYear());
   document.querySelectorAll('.dlcode').forEach(e => e.textContent = DOWNLOADER_CODE);
   document.querySelectorAll('.copy').forEach(b => b.addEventListener('click', () => {
     try { navigator.clipboard.writeText(DOWNLOADER_CODE); } catch (e) {}
