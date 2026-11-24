@@ -163,7 +163,9 @@
           setErr(''); return actions.resolve();
         },
         createOrder: function(){
-          return post('/api/pay/create', {device: dev.value}).then(function(j){
+          var src = '';
+          try { var q = (new URLSearchParams(location.search).get('src') || '').toLowerCase().replace(/[^a-z0-9_-]/g, '').slice(0, 24); var o = JSON.parse(localStorage.getItem('zv_src') || 'null'); src = q || (o && Date.now() - o.t < 30 * 864e5 ? o.s : ''); } catch (e) {}
+          return post('/api/pay/create', {device: dev.value, src: src}).then(function(j){
             if (j.already) { show('ok', j.device); throw new Error('already active'); }
             return j.id;
           });
