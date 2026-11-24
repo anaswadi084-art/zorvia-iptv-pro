@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://zorviaplayer.site/</loc><lastmod>2026-11-22</lastmod><priority>1.0</priority></url>
-  <url><loc>https://zorviaplayer.site/privacy.html</loc><lastmod>2026-11-22</lastmod><priority>0.3</priority></url>
+  <url><loc>https://zorviaplayer.site/privacy.html</loc><lastmod>2026-11-24</lastmod><priority>0.3</priority></url>
   <url><loc>https://zorviaplayer.site/terms.html</loc><lastmod>2026-11-22</lastmod><priority>0.3</priority></url>
   <url><loc>https://zorviaplayer.site/black-friday.html</loc><lastmod>2026-11-22</lastmod><priority>0.8</priority></url>
   <url><loc>https://zorviaplayer.site/buy.html</loc><lastmod>2026-11-22</lastmod><priority>0.8</priority></url>
   <url><loc>https://zorviaplayer.site/contact.html</loc><lastmod>2026-11-22</lastmod><priority>0.4</priority></url>
+  <url><loc>https://zorviaplayer.site/iptv-player-firestick.html</loc><lastmod>2026-11-24</lastmod><priority>0.9</priority></url>
+  <url><loc>https://zorviaplayer.site/iptv-player-windows.html</loc><lastmod>2026-11-24</lastmod><priority>0.8</priority></url>
+  <url><loc>https://zorviaplayer.site/lecteur-iptv.html</loc><lastmod>2026-11-24</lastmod><priority>0.8</priority></url>
 </urlset>
