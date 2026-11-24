@@ -150,6 +150,8 @@
   }
   // prefill from the QR code: playlist.html?mac=..&code=ZRV-.. (older builds: &key=6 digits)
   var q = new URLSearchParams(location.search);
+  // Google Play build of the app: free with ads, nothing to pay here
+  var edPlay = q.get('ed') === 'play';
   if (q.get('mac')) $('mac').value = q.get('mac');
   var qk = q.get('code') || q.get('key');
   if (qk) $('key').value = qk;
@@ -170,10 +172,11 @@
     $('login').classList.add('hidden'); $('panel').classList.remove('hidden');
     $('dMac').textContent = String(j.mac || '').toUpperCase(); $('pMac').textContent = String(j.mac || '').toUpperCase(); $('dCode').textContent = j.device;
     var active = j.status === 'active';
-    $('dStatus').textContent = active ? 'Activated ✓' : (j.status === 'revoked' ? 'Blocked' : 'Free trial');
+    var play = edPlay || j.edition === 'play';
+    $('dStatus').textContent = active ? 'Activated ✓' : (j.status === 'revoked' ? 'Blocked' : (play ? 'Free (Google Play)' : 'Free trial'));
     $('price').textContent = j.price.replace('.', '.') + '€';
     $('payLink').href = 'buy.html?device=' + encodeURIComponent(j.device);
-    $('payCard').classList.toggle('hidden', active || !j.webPay || j.status === 'revoked');
+    $('payCard').classList.toggle('hidden', active || play || !j.webPay || j.status === 'revoked');
     $('list').innerHTML = j.playlists.length ? j.playlists.map(function(p){
       var what = p.type === 'xtream' ? (p.server + ' · ' + p.user) : p.url;
       var label = p.type === 'xtream' ? 'Xtream Codes' : p.type === 'portal' ? 'MAC Portal' : 'M3U';
