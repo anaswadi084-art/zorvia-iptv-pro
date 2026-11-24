@@ -441,19 +441,28 @@
 <script>
   const GITHUB_USER = "anaswadi084-art", REPO = "zorvia-iptv-pro", WHATSAPP = "15819062779", DOWNLOADER_CODE = "4704271";
   const API = "https://zorvia-api.anaswadi084.workers.dev";
-  const apk = `${API}/download?from=site`;
-  // visit counter: once a day per browser, country only (no cookies, no personal data)
+  // traffic source from the link (?src=tiktok, insta, yt...), kept 30 days in this browser
+  let SRC = '', fresh = false;
+  try {
+    const q = (new URLSearchParams(location.search).get('src') || '').toLowerCase().replace(/[^a-z0-9_-]/g, '').slice(0, 24);
+    if (q) { localStorage.setItem('zv_src', JSON.stringify({ s: q, t: Date.now() })); fresh = true; }
+    const o = JSON.parse(localStorage.getItem('zv_src') || 'null');
+    if (o && Date.now() - o.t < 30 * 864e5) SRC = o.s;
+  } catch (e) {}
+  const S = SRC ? `&s=${SRC}` : '';
+  const apk = `${API}/download?from=site${S}`;
+  // visit counter: once a day per browser (and on each new source link), country only (no cookies, no personal data)
   try {
     const d = new Date().toISOString().slice(0, 10);
-    if (localStorage.getItem('zv_seen') !== d) {
+    if (fresh || localStorage.getItem('zv_seen') !== d) {
       localStorage.setItem('zv_seen', d);
-      fetch(`${API}/v?p=${encodeURIComponent(location.pathname)}`, {mode: 'no-cors', keepalive: true}).catch(() => {});
+      fetch(`${API}/v?p=${encodeURIComponent(location.pathname)}${S}`, {mode: 'no-cors', keepalive: true}).catch(() => {});
     }
   } catch (e) {}
   document.querySelectorAll('.dl').forEach(a => a.href = apk);
   // Windows version (ZIP on GitHub Releases)
   const pcZip = `https://github.com/${GITHUB_USER}/${REPO}/releases/latest/download/Zorvia-IPTV-Pro-PC.zip`;
-  document.querySelectorAll('#p-pc .pcdl').forEach(a => a.href = pcZip);
+  document.querySelectorAll('#p-pc .pcdl').forEach(a => { a.href = pcZip; a.addEventListener('click', () => { fetch(`${API}/e?t=pc&p=${encodeURIComponent(location.pathname)}${S}`, {mode: 'no-cors', keepalive: true}).catch(() => {}); }); });
   document.querySelectorAll('.ctas .pcdl').forEach(a => a.addEventListener('click', () => { const t = document.getElementById('t-pc'); if (t) t.click(); }));
   // Samsung (Tizen), LG (webOS) and Hisense (VIDAA) smart TVs cannot install Android apps: explain instead of failing.
   (function () {
