@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Add a playlist to your TV — Zorvia</title>
-<meta name="description" content="Add your M3U link or Xtream Codes login to Zorvia from your phone or computer, using the MAC address and device key shown in the app.">
+<meta name="description" content="Add your M3U link or Xtream Codes login to Zorvia from your phone or computer, using the MAC address and device code shown in the app.">
 <link rel="canonical" href="https://zorviaplayer.site/playlist.html">
 <meta name="robots" content="noindex, follow">
 <meta name="theme-color" content="#0b0e14">
@@ -67,14 +67,14 @@
   <h1>Add a playlist to your TV</h1>
   <p class="muted">Type your playlist here on your phone or computer. It appears in the Zorvia app on your TV: press <b>Reload</b> in the app.</p>
 
-  <!-- step 1: sign in with MAC + key -->
+  <!-- step 1: sign in with MAC + device code -->
   <section class="card" id="login">
     <h2>Your device</h2>
     <p class="muted" style="margin:0">Both are shown in the app, on the activation screen and under “Add playlist”.</p>
     <label for="mac">MAC address</label>
     <input id="mac" class="code" placeholder="00:00:00:00:00:00" autocomplete="off" autocapitalize="off" spellcheck="false">
-    <label for="key">Device key</label>
-    <input id="key" class="code" placeholder="6 digits" inputmode="numeric" maxlength="6" autocomplete="off">
+    <label for="key">Device code</label>
+    <input id="key" class="code" placeholder="ZRV-XXXX-XXXX" maxlength="20" autocomplete="off" autocapitalize="characters" spellcheck="false">
     <button class="btn" id="go">Continue</button>
     <div class="err" id="loginErr" role="alert"></div>
   </section>
@@ -148,16 +148,17 @@
     return fetch(API + path, {method:'POST', headers:{'content-type':'application/json'}, body: JSON.stringify(body)})
       .then(function(r){ return r.json().then(function(j){ if (!r.ok) throw new Error(j.error || ('Error ' + r.status)); return j; }); });
   }
-  // prefill from the QR code: playlist.html?mac=..&key=..
+  // prefill from the QR code: playlist.html?mac=..&code=ZRV-.. (older builds: &key=6 digits)
   var q = new URLSearchParams(location.search);
   if (q.get('mac')) $('mac').value = q.get('mac');
-  if (q.get('key')) $('key').value = q.get('key');
-  if (q.get('mac') && q.get('key')) { history.replaceState(null, '', location.pathname); setTimeout(login, 0); }
+  var qk = q.get('code') || q.get('key');
+  if (qk) $('key').value = qk;
+  if (q.get('mac') && qk) { history.replaceState(null, '', location.pathname); setTimeout(login, 0); }
 
   function login(){
-    var id = $('mac').value.trim(), key = $('key').value.replace(/\D/g, '');
+    var id = $('mac').value.trim(), key = $('key').value.trim().toUpperCase();
     $('loginErr').textContent = '';
-    if (!id || key.length !== 6) { $('loginErr').textContent = 'Enter the MAC address and the 6-digit device key from the app.'; return; }
+    if (!id || key.length < 6) { $('loginErr').textContent = 'Enter the MAC address and the device code (ZRV-XXXX-XXXX) from the app.'; return; }
     $('go').disabled = true;
     post('/api/web/login', {id: id, key: key}).then(function(j){
       auth = {id: id, key: key};
